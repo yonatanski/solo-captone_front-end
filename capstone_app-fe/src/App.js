@@ -1,8 +1,8 @@
-import logo from "./logo.svg"
 import "./App.css"
+import Home from "./Components/Pages/Home"
 
 function App() {
-  return <div>HEllo world</div>
+  return <Home />
 }
 
 export default App
