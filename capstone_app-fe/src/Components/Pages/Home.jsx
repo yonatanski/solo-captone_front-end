@@ -1,6 +1,7 @@
 import React from "react"
 import Announcemnt from "../MainCompnents/Announcemnt"
 import Catagories from "../MainCompnents/Catagories"
+import Footer from "../MainCompnents/Footer"
 import JamboSlider from "../MainCompnents/JamboSlider"
 import Nabar from "../MainCompnents/Navbar"
 import Newsletter from "../MainCompnents/Newsletter"
@@ -15,6 +16,7 @@ const Home = () => {
       <Catagories />
       <Products />
       <Newsletter />
+      <Footer />
     </div>
   )
 }
