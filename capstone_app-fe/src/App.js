@@ -5,7 +5,7 @@ import ProductDetail from "./Components/Pages/ProductDetail"
 import ProductList from "./Components/Pages/ProductList"
 
 function App() {
-  return <Login />
+  return <Home />
 }
 
 export default App

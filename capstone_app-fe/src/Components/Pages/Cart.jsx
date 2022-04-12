@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Announcemnt from "../MainCompnents/Announcemnt"
 import Footer from "../MainCompnents/Footer"
 import Navbar from "../components/Navbar"
-import { mobile } from "../responsive"
+import { mobile } from "../../Responsive/responsive"
 
 const Container = styled.div``
 
