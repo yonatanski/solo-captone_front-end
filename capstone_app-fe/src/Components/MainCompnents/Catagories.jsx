@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { categories } from "../../data"
+import { mobile } from "../../Responsive/responsive"
 import CategoryItem from "./CategoryItem"
 const Container = styled.div`
   //   width: 100%;
@@ -8,8 +9,7 @@ const Container = styled.div`
   display: flex;
   padding: 20px;
   justify-content: space-between;
-
-  //   position: relative;
+  ${mobile({ padding: "0px", flexDirection: "column" })}//   position: relative;
   //   overflow: hidden;
 
   //   align-items: center;
