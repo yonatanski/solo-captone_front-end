@@ -7,9 +7,11 @@ import Navbar from "../MainCompnents/Navbar"
 import Newsletter from "../MainCompnents/Newsletter"
 import Products from "../MainCompnents/Products"
 
+
 const Home = () => {
   return (
     <div>
+  
       <Announcemnt />
       <Navbar />
       <JamboSlider />

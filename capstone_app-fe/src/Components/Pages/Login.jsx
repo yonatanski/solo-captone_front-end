@@ -1,4 +1,9 @@
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { login } from "../../redux/apiCall"
+import { Link } from "react-router-dom"
 import { mobile } from "../../Responsive/responsive"
 
 const Container = styled.div`
@@ -39,10 +44,14 @@ const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
-  background-color: teal;
+  background-color: #000000;
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
 `
 
 const Link = styled.a`
@@ -51,18 +60,37 @@ const Link = styled.a`
   text-decoration: underline;
   cursor: pointer;
 `
-
+const Error = styled.span`
+  color: red;
+`
 const Login = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+  const { isFetching, error } = useSelector((state) => state.user)
+  const handleLogin = (e) => {
+    e.preventDefault()
+    login(dispatch, { email, password })
+    navigate("/")
+  }
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+          <Input placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+          <Button onClick={handleLogin} disabled={isFetching}>
+            LOGIN
+          </Button>
+          {error && <Error>Something went wrong...</Error>}
+          {/* <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link> */}
+
+          <Link to="/register">
+            <div>CREATE A NEW ACCOUNT</div>
+          </Link>
         </Form>
       </Wrapper>
     </Container>
