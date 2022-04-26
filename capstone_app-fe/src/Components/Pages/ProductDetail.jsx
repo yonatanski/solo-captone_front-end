@@ -129,7 +129,7 @@ const ProductDetail = () => {
 
   const getSingleProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/products/${productID}`)
+      const response = await axios.get(`http://localhost:3010/api/products/${productID}`)
       console.log(response)
       setProductsDetial(response.data)
     } catch (error) {}

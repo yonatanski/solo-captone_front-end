@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { login } from "../../redux/apiCall"
-import { Link } from "react-router-dom"
+
 import { mobile } from "../../Responsive/responsive"
 
 const Container = styled.div`
@@ -88,9 +88,7 @@ const Login = () => {
           {error && <Error>Something went wrong...</Error>}
           {/* <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link> */}
 
-          <Link to="/register">
-            <div>CREATE A NEW ACCOUNT</div>
-          </Link>
+          <Link>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
     </Container>
