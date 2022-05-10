@@ -7,6 +7,7 @@ const Container = styled.div`
   //   width: 100%;
   //   height: 100vh;
   display: flex;
+  flex-direction: "column";
   padding: 20px;
   justify-content: space-between;
   ${mobile({ padding: "0px", flexDirection: "column" })}//   position: relative;
@@ -14,14 +15,33 @@ const Container = styled.div`
 
   //   align-items: center;
 `
+const Wrapper = styled.div`
+  padding: 10px 20px;
+  margin: 10px 20px;
+  display: flex;
+  align-items: center;
+`
+const Title = styled.h1`
+  color: black;
+  margin: 0 auto;
+`
 
 const Catagories = () => {
   return (
-    <Container>
-      {categories.map((item) => (
-        <CategoryItem key={item.id} item={item} />
-      ))}
-    </Container>
+    <>
+      <Wrapper>
+        <Title>
+          <hr />
+          Shop By Categories
+          <hr />
+        </Title>
+      </Wrapper>
+      <Container>
+        {categories.map((item) => (
+          <CategoryItem key={item.id} item={item} />
+        ))}
+      </Container>
+    </>
   )
 }
 

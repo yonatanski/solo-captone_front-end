@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Search, ShoppingCartOutlined } from "@material-ui/icons"
 import { mobile } from "../../Responsive/responsive"
 import styled from "styled-components"
@@ -8,6 +8,12 @@ import { Link } from "react-router-dom"
 
 const Container = styled.div`
   height: 60px;
+  background-color: #000000;
+  color: #fff;
+
+  position: sticky;
+  top: 0;
+  z-index: 1;
   ${mobile({ height: "50px" })};
 `
 const Wrapper = styled.div`
@@ -62,6 +68,7 @@ const MenuItem = styled.div`
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.qty)
   console.log("cart", quantity)
+  const [loggedIn, setLogdin] = useState(true)
   return (
     <Container>
       <Wrapper>
@@ -79,8 +86,13 @@ const Navbar = () => {
           </Link>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          {loggedIn && (
+            <>
+              <MenuItem>REGISTER</MenuItem>
+              <MenuItem>SIGN IN</MenuItem>
+            </>
+          )}
+
           <Link to={`/cart`}>
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
