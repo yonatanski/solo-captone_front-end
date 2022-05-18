@@ -20,7 +20,7 @@ const Products = ({ category, filter, sort }) => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(category ? `http://localhost:3010/api/products?category=${category}` : "http://localhost:3010/api/products")
+      const response = await axios.get(category ? `http://localhost:3050/api/products?category=${category}` : "http://localhost:3050/api/products")
       console.log(response)
       setProducts(response.data)
     } catch (error) {}
@@ -28,10 +28,15 @@ const Products = ({ category, filter, sort }) => {
 
   useEffect(() => {
     category && setFilterdProducts(products.filter((item) => Object.entries(filter).every(([key, value]) => item[key].includes(value))))
+
+    if (filter?.color === "") {
+      setFilterdProducts(products)
+    }
   }, [products, category, filter])
 
   useEffect(() => {
     if (sort === "newest") {
+      setFilterdProducts(products)
       setFilterdProducts((prev) => [...prev].sort((a, b) => a.createdAt - b.createdAt))
     } else if (sort === "asc") {
       setFilterdProducts((prev) => [...prev].sort((a, b) => a.price - b.price))
@@ -40,7 +45,7 @@ const Products = ({ category, filter, sort }) => {
     }
   }, [sort])
 
-  return <Container>{category ? filterdProducts.map((item) => <SingleProduct key={item.id} item={item} />) : products.slice(0, 8).map((item) => <SingleProduct key={item.id} item={item} />)}</Container>
+  return <Container>{category ? filterdProducts.map((item) => <SingleProduct key={item.id} item={item} />) : products.map((item) => <SingleProduct key={item.id} item={item} />)}</Container>
 }
 
 export default Products

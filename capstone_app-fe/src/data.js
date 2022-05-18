@@ -1,7 +1,7 @@
 export const sliderItems = [
   {
     id: 1,
-    img: "https://i.ibb.co/cXFnLLV/3.png",
+    img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
     title: "SUMMER SALE",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "f5fafd",
@@ -25,21 +25,33 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "SHIRT STYLE!",
+    img: "https://i.pinimg.com/564x/b8/90/4d/b8904dfd41f0c521ec05e5a3cd0e167b.jpg",
+    title: "WOMEN ",
     cat: "women",
   },
   {
     id: 2,
-    img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "LOUNGEWEAR LOVE",
-    cat: "coat",
+    img: "https://res.cloudinary.com/strive-blogposts/image/upload/v1652711316/Gebeya%20Shop%20Product/matos_xqim9z.jpg",
+    title: "MEN",
+    cat: "men",
   },
   {
     id: 3,
-    img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    title: "LIGHT JACKETS",
-    cat: "jeans",
+    img: "https://i.pinimg.com/564x/77/51/b1/7751b15f9a99b3f237c73ab232ad53d3.jpg",
+    title: "KIDS",
+    cat: "kids",
+  },
+  {
+    id: 4,
+    img: "https://i.pinimg.com/564x/b6/38/59/b6385984ffb94afa5461edf4b4d63487.jpg",
+    title: "ACCESSORIES",
+    cat: "accessories",
+  },
+  {
+    id: 5,
+    img: "https://res.cloudinary.com/strive-blogposts/image/upload/v1652786809/Gebeya%20Shop%20Product/shoeeeeeees_l5viep.png",
+    title: "SHOES",
+    cat: "shoes",
   },
 ]
 

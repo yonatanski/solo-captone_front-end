@@ -1,4 +1,4 @@
-import { Add, Remove } from "@material-ui/icons"
+import { Add, FavoriteBorder, Remove } from "@material-ui/icons"
 import styled from "styled-components"
 import Footer from "../MainCompnents/Footer"
 import Navbar from "../MainCompnents/Navbar"
@@ -8,27 +8,36 @@ import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { addProduct } from "../../redux/cartRedux"
+
 import { useDispatch } from "react-redux"
+import { addProductwishList } from "../../redux/wishListRedux"
+import { publicRequest } from "../../ReqMethod"
 
 const Container = styled.div``
 
 const Wrapper = styled.div`
-  padding: 50px;
+  padding: 30px;
   display: flex;
 `
 
 const ImgContainer = styled.div`
-  flex: 1;
+  flex: 2;
 `
 
 const Image = styled.img`
-  width: 100%;
-  height: 90vh;
+  width: 450px;
+  height: 600;
+  object-fit: cover;
+`
+const LitleImage = styled.img`
+  width: 120px;
+  height: 180px;
+  margin: 9px;
   object-fit: cover;
 `
 
 const InfoContainer = styled.div`
-  flex: 1;
+  flex: 3;
   padding: 0px 50px;
 `
 
@@ -105,18 +114,23 @@ const Amount = styled.span`
 const Button = styled.button`
   padding: 15px;
   border: 2px solid teal;
-  background-color: white;
+  background-color: #0d0d0d;
+  color: #fff;
   cursor: pointer;
   font-weight: 500;
   &:hover {
-    background-color: #f72b2b;
+    background-color: #191717;
   }
+`
+const SelcetdImage = styled.div`
+  display: flex;
 `
 
 const ProductDetail = () => {
   const location = useLocation()
   const productID = location.pathname.split("/")[2]
   console.log(productID)
+  const [selectedImg, setSelectedImg] = useState(0)
   const [productsDetial, setProductsDetial] = useState([])
   const [qty, setQty] = useState(1)
   const [color, setColor] = useState("")
@@ -129,7 +143,7 @@ const ProductDetail = () => {
 
   const getSingleProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:3010/api/products/${productID}`)
+      const response = await publicRequest.get(`products/${productID}`)
       console.log(response)
       setProductsDetial(response.data)
     } catch (error) {}
@@ -144,33 +158,56 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     dispatch(addProduct({ ...productsDetial, qty, color, size }))
   }
+  const handleAddToWishList = () => {
+    dispatch(addProductwishList(productsDetial))
+  }
   return (
     <Container>
-      <Navbar />
       <Announcemnt />
+      <Navbar />
 
       <Wrapper>
-        <ImgContainer>
-          <Image src={productsDetial.img} />
-        </ImgContainer>
+        <ImgContainer>{productsDetial.img && <Image src={productsDetial.img[selectedImg]} />}</ImgContainer>
+
         <InfoContainer>
           <Title>{productsDetial.title}</Title>
           <Desc>{productsDetial.desc}</Desc>
           <Price> {productsDetial.price}$</Price>
           <FilterContainer>
-            <Filter>
+            {/* <Filter>
               <FilterTitle>Color</FilterTitle>
               {productsDetial.color?.map((c) => (
                 <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))}
+            </Filter> */}
+            <Filter>
+              <FilterTitle>Color</FilterTitle>
+              <FilterSize onChange={(e) => setColor(e.target.value)}>
+                {productsDetial.color?.map((c) => (
+                  <FilterSizeOption key={c}>{c}</FilterSizeOption>
+                ))}
+              </FilterSize>
             </Filter>
+            {/* <Filter>
+              <FilterTitle>Color</FilterTitle>
+              <FilterSize value={color} defaultValue={"default"} onChange={(e) => setColor(e.target.value)}>
+                <FilterSizeOption value={"default"} disabled>
+                  Color
+                </FilterSizeOption>
+                {productsDetial.color?.map((c, i) => (
+                  <>
+                    <FilterSizeOption value={c} key={c}>
+                      {c}
+                    </FilterSizeOption>
+                  </>
+                ))}
+              </FilterSize>
+            </Filter> */}
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {productsDetial.size?.map((s) => (
-                  <FilterSizeOption key={s} onClick={(e) => setSize(e.target.value)}>
-                    {s}
-                  </FilterSizeOption>
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>
@@ -182,9 +219,13 @@ const ProductDetail = () => {
               <Add onClick={() => handleQuantity("-")} />
             </AmountContainer>
             <Button onClick={handleAddToCart}>ADD TO CART</Button>
+            <FavoriteBorder onClick={handleAddToWishList} color="primary" fontSize="large" />
           </AddContainer>
         </InfoContainer>
       </Wrapper>
+      {productsDetial?.img?.map((image, i) => (
+        <LitleImage style={{ border: selectedImg === i ? "5px solid black" : "none" }} width="20px" src={image} onClick={() => setSelectedImg(i)} />
+      ))}
 
       <Newsletter />
       <Footer />

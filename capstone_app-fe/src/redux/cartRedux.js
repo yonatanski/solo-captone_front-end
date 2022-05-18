@@ -13,7 +13,14 @@ const cartSlice = createSlice({
       state.products.push(action.payload)
       state.total += action.payload.price * action.payload.qty
     },
+    removeProduct: (state, action) => {
+      state.qty -= 1
+      let productIndex = state.products.findIndex((p) => p._id === action.payload._id)
+      state.products.splice(productIndex, 1)
+      state.products = [...state.products]
+      state.total -= action.payload.price * action.payload.qty
+    },
   },
 })
-export const { addProduct } = cartSlice.actions
+export const { addProduct, removeProduct } = cartSlice.actions
 export default cartSlice.reducer

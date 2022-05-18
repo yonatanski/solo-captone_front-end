@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { publicRequest, userRequest } from "../../ReqMethod"
 import { Link, useNavigate } from "react-router-dom"
-import { removeProduct } from "../../redux/cartRedux"
+import { removeProductwishList } from "../../redux/wishListRedux"
 
 const KEY = process.env.REACT_APP_STRIPE
 console.log(KEY)
@@ -72,7 +72,6 @@ const Product = styled.div`
 
 const ProductDetail = styled.div`
   flex: 2;
-  border-color: black;
   display: flex;
 `
 
@@ -93,7 +92,6 @@ const ProductId = styled.span``
 
 const ProductColor = styled.div`
   width: 20px;
-
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
@@ -164,75 +162,50 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `
-const RemoveFromCart = styled.div`
+const RemoveFromWish = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `
 
-const Cart = () => {
-  const cartList = useSelector((state) => state.cart)
-  const userID = useSelector((state) => state.user.currentUser?.User._id)
-  const userIDforCheckout = useSelector((state) => state.user.currentUser)
-  const quantity = useSelector((state) => state.cart.qty)
+const Favourite = () => {
+  const wishList = useSelector((state) => state.wish.wishProducts)
   const wishQuantity = useSelector((state) => state.wish.qty)
+  const cartQuantity = useSelector((state) => state.cart.qty)
 
-  console.log("cart", quantity)
   const [stripeToken, setStripeToken] = useState(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   console.log("navigate", navigate)
 
-  const onToken = (token) => {
-    setStripeToken(token)
+  const handleRemoveFromwish = (product) => {
+    dispatch(removeProductwishList(product))
   }
-  console.log("stripeToken", stripeToken)
-  useEffect(() => {
-    const payment = async () => {
-      try {
-        const response = await userRequest.post(`/checkout/payment`, {
-          tokenId: stripeToken.id,
-          amount: 50000, //cartList.total * 100,
-        })
-        navigate("/success", { state: { address: response.data, products: cartList, userId: userID, amount: cartList.total } })
-      } catch (error) {}
-    }
-    stripeToken && payment()
-  }, [stripeToken, cartList.total])
 
-  // const handleChekOutLOgdin = () => {
-  //   if (!userIDforCheckout) {
-  //     navigate("/login")
-  //   }
-  // }
-
-  const handleRemoveFromCart = (product) => {
-    dispatch(removeProduct(product))
-  }
   return (
     <Container>
       <Announcemnt />
       <Navbar />
 
       <Wrapper>
-        <Title>YOUR CART</Title>
+        <Title>WHISH LIST</Title>
+
         <Top>
           <Link to={`/`}>
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Shopping Cart({quantity})</TopText>
-            <Link to={`/favourite`}>
-              <TopText>Your Wishlist ({wishQuantity})</TopText>
+            <Link to={`/cart`}>
+              <TopText>Shopping Cart({cartQuantity})</TopText>
             </Link>
+            <TopText>Your Wishlist ({wishQuantity})</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
-            {cartList.products.map((product, i) => (
-              <Product key={i}>
+            {wishList.map((product) => (
+              <Product>
                 <ProductDetail>
                   <Link to={`/product/${product._id}`}>
                     <Image src={product.img[0]} />
@@ -244,65 +217,22 @@ const Cart = () => {
                     <ProductId>
                       <b>ID:</b> {product._id}
                     </ProductId>
-                    <ProductSize>
-                      <b>Color:</b> {product.color}
-                    </ProductSize>
-
+                    <ProductColor color={product.color} />
                     <ProductSize>
                       <b>Size:</b> {product.size}
                     </ProductSize>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
-                  <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.qty}</ProductAmount>
-                    <Remove />
-                  </ProductAmountContainer>
-                  <ProductPrice>$ {product.price * product.qty}</ProductPrice>
+                  <ProductPrice>$ {product.price}</ProductPrice>
                 </PriceDetail>
-                <RemoveFromCart>
-                  <RemoveCircle style={{ color: "red" }} fontSize="large" onClick={() => handleRemoveFromCart(product)} />
-                </RemoveFromCart>
+                <RemoveFromWish>
+                  <RemoveCircle style={{ color: "red" }} fontSize="large" onClick={() => handleRemoveFromwish(product)} />
+                </RemoveFromWish>
               </Product>
             ))}
             <Hr />
           </Info>
-          {quantity !== 0 && (
-            <Summary>
-              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-              <SummaryItem>
-                <SummaryItemText>Subtotal</SummaryItemText>
-                <SummaryItemPrice>{cartList.total}</SummaryItemPrice>
-              </SummaryItem>
-              <SummaryItem>
-                <SummaryItemText>Estimated Shipping</SummaryItemText>
-                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-              </SummaryItem>
-              <SummaryItem>
-                <SummaryItemText>Shipping Discount</SummaryItemText>
-                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-              </SummaryItem>
-              <SummaryItem type="total">
-                <SummaryItemText>Total</SummaryItemText>
-                <SummaryItemPrice>{cartList.total}</SummaryItemPrice>
-              </SummaryItem>
-              <StripeCheckout
-                name="Gebeya Shop"
-                image="https://cdn.w600.comps.canstockphoto.com/market-logo-clipart-vector_csp11482053.jpg"
-                billingAddress
-                shippingAddress
-                description={`Your total is $${cartList.total}`}
-                amount={cartList.total * 100}
-                token={onToken}
-                stripeKey={KEY}
-              >
-                <Button style={{ border: userIDforCheckout ? "none" : "2px solid red" }} disabled={userIDforCheckout ? false : true}>
-                  {userIDforCheckout ? "CHEKOUT NOW" : "SIGN IN/LOGIN TO CHECK OUT"}
-                </Button>
-              </StripeCheckout>
-            </Summary>
-          )}
         </Bottom>
       </Wrapper>
       <Footer />
@@ -310,4 +240,4 @@ const Cart = () => {
   )
 }
 
-export default Cart
+export default Favourite

@@ -1,14 +1,13 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:3005/api/"
-const TOKEN = "sdkjfbsdhfbsjfbsdbf"
-// const TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.accessToken
-
+const BASE_URL = "http://localhost:3050/api/"
+const TOKEN = localStorage.getItem("persist:root") ? JSON.parse(JSON.parse(localStorage.getItem("persist:root"))?.user).currentUser?.accessToken : undefined
+console.log(TOKEN)
 export const publicRequest = axios.create({
   baseURL: BASE_URL,
 })
 
 export const userRequest = axios.create({
   baseURL: BASE_URL,
-  header: { token: `Bearer ${TOKEN}` },
+  headers: { Authorization: `Bearer ${TOKEN}` },
 })

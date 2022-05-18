@@ -1,7 +1,10 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons"
 import React from "react"
+import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { addProduct } from "../../redux/cartRedux"
+import { addProductwishList } from "../../redux/wishListRedux"
 
 const Info = styled.div`
   opacity: 0;
@@ -15,7 +18,7 @@ const Info = styled.div`
   top: 0;
   left: 0;
 
-  z-index: 3;
+  z-index: 0;
   position: absolute;
   transition: all 0.5s ease;
   cursor: pointer;
@@ -23,8 +26,8 @@ const Info = styled.div`
 const Container = styled.div`
   flex: 1;
   margin: 5px;
-  min-width: 280px;
-  height: 350px;
+  min-width: 200px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +47,7 @@ const Circle = styled.div`
 `
 const Image = styled.img`
   height: 75%;
-  z-index: 2;
+  z-index: 0;
 `
 
 const Icon = styled.div`
@@ -65,22 +68,32 @@ const Icon = styled.div`
 `
 
 const SingleProduct = ({ item }) => {
+  const dispatch = useDispatch()
+
+  const handleAddToCart = (product) => {
+    dispatch(addProduct(product))
+  }
+  const handleAddToWish = (product) => {
+    dispatch(addProductwishList(product))
+  }
   return (
     <Container>
       <Circle />
-      <Image key={item._id} src={item.img} />
+      <Image key={item._id} src={item.img[0]} />
+      {/* <h6> {item.title} </h6> */}
       <Info>
         <Icon>
-          <ShoppingCartOutlined />
+          <ShoppingCartOutlined style={{ color: "red" }} fontSize="large" onClick={() => handleAddToCart({ ...item, qty: 1 })} />
         </Icon>
         <Link to={`/product/${item._id}`}>
           <Icon>
-            <SearchOutlined />
+            <SearchOutlined fontSize="large" />
           </Icon>
         </Link>
         <Icon>
-          <FavoriteBorderOutlined />
+          <FavoriteBorderOutlined fontSize="large" style={{ color: "primary" }} onClick={() => handleAddToWish(item)} />
         </Icon>
+        {/* <h6> {item.title} </h6> */}
       </Info>
     </Container>
   )

@@ -8,6 +8,8 @@ const Container = styled.div`
   //   height: 100vh;
   display: flex;
   flex-direction: "column";
+  flex-wrap: wrap;
+
   padding: 20px;
   justify-content: space-between;
   ${mobile({ padding: "0px", flexDirection: "column" })}//   position: relative;

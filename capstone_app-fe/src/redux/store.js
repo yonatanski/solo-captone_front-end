@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import cartReducer from "./cartRedux"
 import userReducer from "./userRedux"
+import wishReducer from "./wishListRedux"
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 
@@ -9,7 +10,7 @@ const persistConfig = {
   version: 1,
   storage,
 }
-const rootReducer = combineReducers({ user: userReducer, cart: cartReducer })
+const rootReducer = combineReducers({ user: userReducer, cart: cartReducer, wish: wishReducer })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
