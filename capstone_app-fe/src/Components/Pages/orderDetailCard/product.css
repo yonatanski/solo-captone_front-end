@@ -38,7 +38,7 @@
 
 .productInfoImg {
   width: 100px;
-  height:100px;
+  height: 100px;
 
   object-fit: cover;
   margin-right: 20px;
@@ -47,6 +47,7 @@
 .productInfoTop {
   display: flex;
   align-items: center;
+  margin-top: 20px;
 }
 
 .productName {
@@ -64,7 +65,7 @@
 }
 
 .productInfoValue {
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .productBottom {
@@ -96,11 +97,11 @@
   border-bottom: 1px solid gray;
 }
 
-.productFormLeft >select{
+.productFormLeft > select {
   margin-bottom: 10px;
 }
 
-.productUploadImg{
+.productUploadImg {
   width: 100px;
   height: 100px;
   border-radius: 10px;
@@ -108,23 +109,23 @@
   margin-right: 20px;
 }
 
-.productFormRight{
+.productFormRight {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-.productUpload{
+.productUpload {
   display: flex;
   align-items: center;
 }
 
-.productButton{
+.productButton {
   border: none;
   padding: 5px;
   border-radius: 5px;
   background-color: darkblue;
-  color:white;
+  color: white;
   font-weight: 600;
   cursor: pointer;
 }
@@ -134,17 +135,24 @@
   border-radius: 10px;
 }
 
-.widgetLgButton.approved{
-    background-color: #000000;
-    color: #3bb077;
+.widgetLgButton.approved {
+  background-color: #000000;
+  color: #3bb077;
 }
-.widgetLgButton.declined{
-    background-color: #000000;
-    color: #d95087;
-
+.widgetLgButton.declined {
+  background-color: #000000;
+  color: #d95087;
 }
-.widgetLgButton.pending{
-    background-color: #f4fd06;
-    color: #0d6bdd;
+.widgetLgButton.pending {
+  background-color: #f4fd06;
+  color: #0d6bdd;
+}
+.widgetLgStatus {
+  margin-top: 5px;
+}
 
+@media only screen and (max-width: 380px) {
+  .productTitle {
+    font-size: 17px;
+  }
 }

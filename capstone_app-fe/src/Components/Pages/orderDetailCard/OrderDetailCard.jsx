@@ -1,31 +1,39 @@
-import { Link, useLocation, useParams } from "react-router-dom"
-import "./product.css"
+import { Link, useLocation, useParams } from "react-router-dom";
+import "./product.css";
 
-import { useDispatch, useSelector } from "react-redux"
-import { CheckCircle, LocalShipping, Publish } from "@material-ui/icons"
-import { useEffect, useMemo, useState } from "react"
-import { Button } from "@material-ui/core"
+import { useDispatch, useSelector } from "react-redux";
+import { CheckCircle, LocalShipping, Publish } from "@material-ui/icons";
+import { useEffect, useMemo, useState } from "react";
+import { Button } from "@material-ui/core";
 
 // import { format } from "timeago.js"
 
 export default function OrderDetailCard({ orderItem, i }) {
-  console.log("orderitem", orderItem)
+  console.log("orderitem", orderItem);
   return (
     <>
       <div className="product">
         <div className="productTitleContainer">
-          <h1 className="productTitle">Order Detail {i}</h1>
-          <h4 className="productTitle">Order ID-{orderItem?._id}</h4>
-          <Link to="/newproduct">
+          <span className="productTitle text-dark">Order Detail {i}</span>
+          <span className="productTitle text-dark">
+            Order ID-{orderItem?._id}
+          </span>
+          {/* <Link to="/newproduct">
             <button className="productAddButton">Create</button>
-          </Link>
+          </Link> */}
         </div>
         <div className="productTop"></div>
         {/*  */}
         <div className="productTop">
           <div className="productTopRight">
             <span className="widgetLgStatus">
-              Order Status {orderItem.status === "pending" ? <CheckCircle /> : <LocalShipping fontSize="large" />} {orderItem.status === "pending" ? "Pending" : "Shipped"}
+              Order Status{" "}
+              {orderItem.status === "pending" ? (
+                <CheckCircle />
+              ) : (
+                <LocalShipping fontSize="large" />
+              )}{" "}
+              {orderItem.status === "pending" ? "Pending" : "Shipped"}
             </span>
 
             {/* <div className="widgetLgStatus">
@@ -35,7 +43,10 @@ export default function OrderDetailCard({ orderItem, i }) {
               <>
                 <div key={i} className="productInfoTop">
                   <img src={product.img[0]} alt="" className="productInfoImg" />
-                  <span className="productName text-dark"> {product.title}</span>
+                  <span className="productName text-dark">
+                    {" "}
+                    {product.title}
+                  </span>
                 </div>
 
                 <div className="productInfoBottom">
@@ -58,7 +69,9 @@ export default function OrderDetailCard({ orderItem, i }) {
                   </div>
                   <div className="productInfoItem">
                     <span className="productInfoKey">inStock:</span>
-                    <span className="productInfoValue">{product.inStock ? "Yes" : "No"}</span>
+                    <span className="productInfoValue">
+                      {product.inStock ? "Yes" : "No"}
+                    </span>
                   </div>
                   <div className="productInfoItem">
                     <span className="productInfoKey">Quantity:</span>
@@ -71,5 +84,5 @@ export default function OrderDetailCard({ orderItem, i }) {
         </div>
       </div>
     </>
-  )
+  );
 }

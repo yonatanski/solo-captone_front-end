@@ -16,6 +16,7 @@ const Home = () => {
       <Navbar />
       <JamboSlider />
       <Catagories />
+      
       <Products />
       <Newsletter />
       <Footer />
