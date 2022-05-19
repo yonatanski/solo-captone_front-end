@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { login } from "../../redux/apiCall"
+import { Link } from "react-router-dom"
 
 import { mobile } from "../../Responsive/responsive"
+import facebook from "../../Logo/facebooksignin.png"
+import google from "../../Logo/goglesignin.png"
 
 const Container = styled.div`
   width: 100vw;
@@ -54,7 +57,7 @@ const Button = styled.button`
   }
 `
 
-const Link = styled.a`
+const Linkk = styled.div`
   margin: 5px 0px;
   font-size: 12px;
   text-decoration: underline;
@@ -63,6 +66,13 @@ const Link = styled.a`
 const Error = styled.span`
   color: red;
 `
+const LogosignIN = styled.img`
+  width: 300px;
+
+  cursor: pointer;
+  ${mobile({ width: "250px" })}
+`
+
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -80,15 +90,22 @@ const Login = () => {
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-          <Input placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+          <Input type="text" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+          <Input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
           <Button onClick={handleLogin} disabled={isFetching}>
             LOGIN
           </Button>
+          <Link to={`/`}>
+            <LogosignIN src={facebook} />
+          </Link>
+          <Link to={`/`}>
+            <LogosignIN src={google} />
+          </Link>
           {error && <Error>Something went wrong...</Error>}
           {/* <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link> */}
-
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Link to={`/register`}>
+            <Linkk>CREATE A NEW ACCOUNT</Linkk>
+          </Link>
         </Form>
       </Wrapper>
     </Container>
