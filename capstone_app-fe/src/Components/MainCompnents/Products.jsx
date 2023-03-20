@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import SingleProduct from "./SingleProduct"
+import Spinner from "./Spinner/Spinner"
 import { popularProducts } from "../../data"
 import axios from "axios"
 
@@ -12,6 +13,7 @@ const Container = styled.div`
 `
 const Products = ({ category, filter, sort }) => {
   const [products, setProducts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [filterdProducts, setFilterdProducts] = useState([])
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const Products = ({ category, filter, sort }) => {
       const response = await axios.get(category ? `${process.env.REACT_APP_BE_URL}/api/products?category=${category}` : `${process.env.REACT_APP_BE_URL}/api/products`)
       console.log(response)
       setProducts(response.data)
+      setIsLoading(true)
     } catch (error) {}
   }
 
@@ -45,7 +48,7 @@ const Products = ({ category, filter, sort }) => {
     }
   }, [sort])
 
-  return <Container>{category ? filterdProducts.map((item) => <SingleProduct key={item.id} item={item} />) : products.map((item) => <SingleProduct key={item.id} item={item} />)}</Container>
+  return isLoading ? <Container>{category ? filterdProducts.map((item) => <SingleProduct key={item.id} item={item} />) : products.map((item) => <SingleProduct key={item.id} item={item} />)}</Container> : <Spinner />
 }
 
 export default Products

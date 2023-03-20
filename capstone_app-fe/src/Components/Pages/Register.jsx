@@ -1,6 +1,10 @@
 import styled from "styled-components"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { mobile } from "../../Responsive/responsive"
-
+import { register } from "../../redux/apiCall"
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -45,19 +49,33 @@ const Button = styled.button`
 `
 
 const Register = () => {
+  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+  const { isFetching, error } = useSelector((state) => state.user)
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    register(dispatch, { username, email, password })
+    navigate("/")
+  }
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
+          <Input placeholder="username" onChange={(e) => setUsername(e.target.value)} />
+          <Input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+          <Input placeholder="password" onChange={(e) => setPassword(e.target.value)} />
           <Input placeholder="confirm password" />
 
-          <Button>CREATE</Button>
+          <Button onClick={handleRegister} disabled={isFetching}>
+            CREATE
+          </Button>
         </Form>
       </Wrapper>
     </Container>

@@ -103,10 +103,10 @@ const Footer = () => {
       <Right>
         <Title>Contact</Title>
         <ContactItem>
-          <Room style={{ marginRight: "10px" }} /> Berlin, Germany
+          <Room style={{ marginRight: "10px" }} /> Hawassa, Ethiopia
         </ContactItem>
         <ContactItem>
-          <Phone style={{ marginRight: "10px" }} /> +49 579 298 192
+          <Phone style={{ marginRight: "10px" }} /> +251 965 795 287
         </ContactItem>
         <ContactItem>
           <MailOutline style={{ marginRight: "10px" }} /> contact@gebya.com

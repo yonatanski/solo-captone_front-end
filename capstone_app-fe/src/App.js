@@ -14,6 +14,7 @@ import Profile from "./Components/Pages/Profile"
 
 function App() {
   const user = useSelector((state) => state.user.currentUser)
+  console.log("autinticated user", user)
   return (
     <BrowserRouter>
       <Routes>
